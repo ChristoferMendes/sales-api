@@ -1,5 +1,5 @@
 import { Customer } from '@modules/customers/infra/typeorm/entities/Customer';
-import { CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { OrdersProducts } from './OrdersProducts';
 
 @Entity('orders')
@@ -15,6 +15,9 @@ export class Order {
     cascade: true,
   })
   order_products: OrdersProducts[];
+
+  @Column()
+  customer_uuid: string;
 
   @CreateDateColumn()
   created_at: Date;
