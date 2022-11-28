@@ -4,7 +4,7 @@ import { Status } from '@shared/classes/Status';
 import { AppError } from '@shared/errors/AppError';
 import { ProductRepository } from '@modules/products/repository/product.repository';
 import { OrderRepository } from '../repositories/OrderRepository';
-import { CustomerRepository } from '@modules/customers/repository/CustomerRepository';
+import { CustomerRepository } from '@modules/customers/infra/typeorm/repositories/CustomerRepository';
 
 const { notFound } = new Status();
 export class OrderService implements IOrderService {

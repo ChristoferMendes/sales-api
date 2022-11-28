@@ -14,7 +14,7 @@ import { AddProductUuidToOrdersProducts1669165401457 } from './migration/1669165
 import { AddOrderUuidToOrdersProducts1669165208892 } from './migration/1669165208892-AddOrderUuidToOrdersProducts';
 import { Order } from '@modules/orders/entities/Order';
 import { OrdersProducts } from '@modules/orders/entities/OrdersProducts';
-import { Customer } from '@modules/customers/entity/Customer';
+import { Customer } from '@modules/customers/infra/typeorm/entities/Customer';
 
 export const AppDataSource = new DataSource({
   type: 'postgres',

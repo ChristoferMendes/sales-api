@@ -5,7 +5,7 @@ import { profileRouter } from '@modules/users/routes/profile.routes';
 import { sessionsRouter } from '@modules/users/routes/session.routes';
 import { userRouter } from '@modules/users/routes/user.routes';
 import { orderRouter } from '@modules/orders/routes/order.routes';
-import { customerRouter } from '@modules/customers/customer.routes';
+import { customerRouter } from '@modules/customers/infra/http/routes/customer.routes';
 
 export const routes = Router();
 

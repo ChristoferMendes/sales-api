@@ -1,6 +1,6 @@
 import { ICreateCustomer } from '@modules/customers/domain/models/ICreateCustomer';
 import { ICustomer } from '@modules/customers/domain/models/ICustomer';
-import { Customer } from '@modules/customers/entity/Customer';
+import { Customer } from '@modules/customers/infra/typeorm/entity/Customer';
 import { v4 as uuid } from 'uuid';
 
 export class MockCustomerService {

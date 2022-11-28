@@ -4,25 +4,33 @@ import type { IFindAllCustomers } from '../domain/models/IFindAllCustomers';
 import type { ICustomerService } from '../domain/services/ICustomerService';
 import { Status } from '@shared/classes/Status';
 import { AppError } from '@shared/errors/AppError';
-import { CustomerRepository } from '../repository/CustomerRepository';
+import { Repository } from 'typeorm';
+import { Customer } from '../infra/typeorm/entities/Customer';
+import { CustomerRepository } from '../infra/typeorm/repositories/CustomerRepository';
 
 const { notFound, conflict } = new Status();
 
 export class CustomerService implements ICustomerService {
+  private customerRepository: Repository<Customer> = CustomerRepository;
+
   async create({ name, email }: ICreateCustomer) {
-    const emailExists = await CustomerRepository.findOneBy({ email });
+    const emailExists = await this.customerRepository.findOneBy({ email });
 
     if (emailExists) throw new AppError('Email already exists', conflict);
 
-    const customer = CustomerRepository.create({ name, email });
+    const customer = this.customerRepository.create({ name, email });
 
-    await CustomerRepository.save(customer);
+    await this.customerRepository.save(customer);
 
     return customer;
   }
 
   async findAll({ page, skip, take }: IFindAllCustomers) {
-    const [customers, count] = await CustomerRepository.createQueryBuilder().skip(skip).take(take).getManyAndCount();
+    const [customers, count] = await this.customerRepository
+      .createQueryBuilder()
+      .skip(skip)
+      .take(take)
+      .getManyAndCount();
 
     const result: ICustomersPaginate = {
       per_page: take,
@@ -35,7 +43,7 @@ export class CustomerService implements ICustomerService {
   }
 
   async findOne({ uuid }: { uuid: string }) {
-    const customer = await CustomerRepository.findOneBy({ uuid });
+    const customer = await this.customerRepository.findOneBy({ uuid });
 
     if (!customer) throw new AppError('This customer does not exist', notFound);
 
@@ -43,19 +51,21 @@ export class CustomerService implements ICustomerService {
   }
 
   async delete({ uuid }: { uuid: string }) {
-    const customer = await CustomerRepository.findOneBy({ uuid });
+    const customer = await this.customerRepository.findOneBy({ uuid });
 
     if (!customer) throw new AppError('Customer not found', notFound);
 
-    await CustomerRepository.remove(customer);
+    await this.customerRepository.remove(customer);
 
     return customer;
   }
 
-  async update({ uuid, name, email }) {
-    const customer = await CustomerRepository.findOneBy({ uuid });
+  async update({ uuid, name, email }: { uuid: string; name: string; email: string }) {
+    const customer = await this.customerRepository.findOneBy({ uuid });
 
-    const emailExists = await CustomerRepository.findOneBy({ email });
+    if (!customer) throw new AppError('Customer not found', notFound);
+
+    const emailExists = await this.customerRepository.findOneBy({ email });
 
     if (emailExists && emailExists.uuid !== customer.uuid) {
       throw new AppError('Email already exists', conflict);
@@ -64,7 +74,7 @@ export class CustomerService implements ICustomerService {
     customer.name = name ?? customer.name;
     customer.email = email ?? customer.email;
 
-    await CustomerRepository.save(customer);
+    await this.customerRepository.save(customer);
 
     return customer;
   }

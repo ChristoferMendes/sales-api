@@ -37,7 +37,9 @@ export class ProductService implements IProductService {
 
     const product = await ProductRepository.findOneBy({ uuid });
 
-    if (productExists && name != product.name) {
+    if (!product) throw new AppError('Product not found', notFound);
+
+    if (productExists && name != product?.name) {
       throw new AppError('There is already one product with this name', conflict);
     }
 

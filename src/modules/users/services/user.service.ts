@@ -46,10 +46,11 @@ export class UserService {
     return user;
   }
 
-  async updateUserAvatar({ uuid, file }: { uuid: string; file: string }) {
+  async updateUserAvatar({ uuid, file }: { uuid: string; file: string | undefined }) {
     const user = await UserRepository.findOneBy({ uuid });
-    console.log(user);
     if (!user) throw new AppError('User not found', notFound);
+
+    if (!file) throw new AppError('Please, send a file', notFound);
 
     if (user.avatar) {
       const userAvatarFilePath = path.join(uploadConfig.directory, user.avatar);

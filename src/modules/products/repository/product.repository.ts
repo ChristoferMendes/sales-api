@@ -1,5 +1,5 @@
-import { AppDataSource } from 'data-source';
 import { Product } from '@modules/products/entity/Product';
+import { AppDataSource } from 'src/data-source';
 import { In } from 'typeorm';
 
 interface IFindProducts {
@@ -7,8 +7,8 @@ interface IFindProducts {
 }
 
 export const ProductRepository = AppDataSource.getRepository(Product).extend({
-  async findByName(name: string): Promise<Product | undefined> {
-    const product: Product = await this.findOne({
+  async findByName(name: string): Promise<Product | null> {
+    const product: Product | null = await this.findOne({
       where: {
         name,
       },

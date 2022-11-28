@@ -1,7 +1,7 @@
 import { isAuthenticated } from '@shared/http/middlewares/isAuthenticated';
 import { Router } from 'express';
-import { CustomerController } from './customer.controller';
-import { CustomerValidator } from './customer.validator';
+import { CustomerController } from '../controllers/customer.controller';
+import { CustomerValidator } from '../validators/customer.validator';
 
 export const customerRouter = Router();
 

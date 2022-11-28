@@ -1,5 +1,5 @@
-import { Customer } from '@modules/customers/entity/Customer';
-import { AppDataSource } from 'data-source';
+import { Customer } from '@modules/customers/infra/typeorm/entities/Customer';
+import { AppDataSource } from 'src/data-source';
 import { Order } from '../entities/Order';
 
 export interface IRProduct {
@@ -14,10 +14,8 @@ interface IRequest {
 }
 
 export const OrderRepository = AppDataSource.getRepository(Order).extend({
-  async findByName(id: string): Promise<Order | undefined> {
-    const order: Order = await this.findOne(id, {
-      relations: ['order_products', 'customer'],
-    });
+  async findByName(uuid: string): Promise<Order | null> {
+    const order: Order | null = await this.findOneBy({ uuid });
 
     return order;
   },

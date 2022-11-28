@@ -1,17 +1,17 @@
+import { CustomerService } from '@modules/customers/services/customer.service';
 import { Status } from '@shared/classes/Status';
 import { Request, Response } from 'express';
-import { CustomerService } from './services/customer.service';
 
-const productService = new CustomerService();
 const { ok, created } = new Status();
+const customerService = new CustomerService();
 
 export class CustomerController {
   async index(req: Request, res: Response) {
     const page = req.query.page ? Number(req.query.page) : 1;
-    const take = req.query.limit ? Number(req.query.limit) : 15;
+    const take = req.query.take ? Number(req.query.take) : 15;
     const skip = (page - 1) * take;
 
-    const customers = await productService.findAll({ page, take, skip });
+    const customers = await customerService.findAll({ page, take, skip });
 
     return res.status(ok).json(customers);
   }
@@ -19,7 +19,7 @@ export class CustomerController {
   async show(req: Request, res: Response) {
     const { uuid } = req.params;
 
-    const product = await productService.findOne({ uuid });
+    const product = await customerService.findOne({ uuid });
 
     return res.status(ok).json(product);
   }
@@ -27,7 +27,7 @@ export class CustomerController {
   async create(req: Request, res: Response) {
     const { name, email } = req.body;
 
-    const product = await productService.create({
+    const product = await customerService.create({
       name,
       email,
     });
@@ -39,7 +39,7 @@ export class CustomerController {
     const { name, email } = req.body;
     const { uuid } = req.body;
 
-    const product = await productService.update({
+    const product = await customerService.update({
       uuid,
       name,
       email,
@@ -51,7 +51,7 @@ export class CustomerController {
   async delete(req: Request, res: Response) {
     const { uuid } = req.params;
 
-    const productDeleted = await productService.delete({ uuid });
+    const productDeleted = await customerService.delete({ uuid });
 
     return res.status(ok).json({ message: 'Customer deleted', productDeleted });
   }

@@ -32,7 +32,7 @@ export class UserController {
   updateAvatar = async (req: Request, res: Response) => {
     const user = await this.userService.updateUserAvatar({
       uuid: req.user.uuid,
-      file: req.file.filename,
+      file: req.file?.filename,
     });
 
     return res.status(ok).json(instanceToInstance(user));

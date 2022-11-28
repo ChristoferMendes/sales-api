@@ -1,5 +1,5 @@
-import { AppDataSource } from 'data-source';
 import { UserToken } from '@modules/users/entities/UserToken';
+import { AppDataSource } from 'src/data-source';
 
 export const UserTokenRepository = AppDataSource.getRepository(UserToken).extend({
   async generate(user_uuid: string): Promise<UserToken> {
