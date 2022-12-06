@@ -23,7 +23,7 @@ export class OrderService implements IOrderService {
     const serializedProducts = products.map((product) => ({
       product_uuid: product.uuid,
       quantity: product.quantity,
-      price: existsProducts.filter((p) => p.uuid === product.uuid)[0].price,
+      price: existsProducts.filter((p) => p.uuid === product.uuid)[0].price * product.quantity,
     }));
 
     const order = await OrderRepository.createOrder({

@@ -7,6 +7,7 @@ export const productsRouter = Router();
 
 const { getValidator, postValidator, putValidator } = new ProductValidator();
 const productController = new ProductsController();
+productsRouter.use(isAuthenticated);
 
 productsRouter.get('/', productController.index);
 
