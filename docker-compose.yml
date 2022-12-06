@@ -1,12 +1,32 @@
-version: '3'
 services:
+  app:
+    build: .
+    entrypoint: .docker/entrypoint.sh
+    container_name: salesapi-app
+    ports:
+      - '3333:3333'
+    volumes:
+      - .:/home/node/app
+    depends_on:
+      - db
+      - redis
 
-  postgres:
-    image: "postgres:14.5"
+  db:
+    build: .docker/postgres
+    container_name: salesapi-db
+    restart: always
     ports:
       - "5432:5432"
     environment:
       POSTGRES_USER: "artie"
       POSTGRES_PASSWORD: "31415"
-      POSTGRES_DB: "sales-api"
+      POSTGRES_DB: "salesapi-db"
 
+
+  redis:
+    image: 'bitnami/redis:latest'
+    container_name: salesapi-redis
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+
+      

@@ -18,11 +18,11 @@ import { Customer } from '@modules/customers/infra/typeorm/entities/Customer';
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
-  host: 'localhost',
+  host: 'db',
   port: 5432,
   username: 'artie',
   password: '31415',
-  database: 'sales-api',
+  database: 'salesapi-db',
   synchronize: true,
   logging: false,
   entities: [Product, User, UserToken, Customer, Order, OrdersProducts],

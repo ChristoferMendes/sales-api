@@ -5,9 +5,9 @@
   "type": "commonjs",
   "scripts": {
     "start": "ts-node src/index.ts",
-    "typeorm": "typeorm-ts-node-commonjs",
+    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/.bin/typeorm",
     "migration:create": "cd ./src/migration/ && npx typeorm migration:create",
-    "migration:run": "npx typeorm-ts-node-commonjs -d src/data-source.ts migration:run ",
+    "migration:run": "yarn typeorm -d src/data-source.ts migration:run",
     "schema:drop": "npx typeorm-ts-node-commonjs -d src/data-source.ts schema:drop",
     "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/shared/http/server.ts",
     "test": "jest"
