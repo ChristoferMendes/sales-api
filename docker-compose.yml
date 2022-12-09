@@ -21,7 +21,8 @@ services:
       POSTGRES_USER: "artie"
       POSTGRES_PASSWORD: "31415"
       POSTGRES_DB: "salesapi-db"
-
+    volumes:
+      - sales-api:/var/lib/postgresql/data
 
   redis:
     image: 'bitnami/redis:latest'
@@ -29,4 +30,5 @@ services:
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
 
-      
+volumes:
+  sales-api:
