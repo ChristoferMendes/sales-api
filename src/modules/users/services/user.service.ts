@@ -75,4 +75,10 @@ export class UserService {
 
     return user;
   }
+
+  async findOneByEmail({ email }: { email: string }) {
+    const user = await UserRepository.findOneBy({ email });
+
+    return user;
+  }
 }

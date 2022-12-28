@@ -18,3 +18,5 @@ userRouter.get('/:uuid', [getValidator(), isAuthenticated], userController.show)
 userRouter.post('/', postValidator(), userController.create);
 
 userRouter.patch('/avatar', isAuthenticated, upload.single('avatar'), userController.updateAvatar);
+
+userRouter.get('/email', isAuthenticated, userController.findOneByEmail);
