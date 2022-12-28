@@ -37,11 +37,4 @@ export class UserController {
 
     return res.status(ok).json(instanceToInstance(user));
   };
-
-  findOneByEmail = async (req: Request, res: Response) => {
-    const { email } = req.body;
-    const user = await this.userService.findOneByEmail({ email });
-
-    return res.status(ok).json(user);
-  };
 }

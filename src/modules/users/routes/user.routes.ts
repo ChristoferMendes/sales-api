@@ -14,9 +14,7 @@ const userService = new UserService();
 const userController = new UserController(userService);
 
 userRouter.get('/', isAuthenticated, userController.index);
-userRouter.get('/:uuid', [getValidator(), isAuthenticated], userController.show);
+userRouter.get('/:uuid', getValidator, isAuthenticated, userController.show);
 userRouter.post('/', postValidator(), userController.create);
 
 userRouter.patch('/avatar', isAuthenticated, upload.single('avatar'), userController.updateAvatar);
-
-userRouter.get('/email', isAuthenticated, userController.findOneByEmail);

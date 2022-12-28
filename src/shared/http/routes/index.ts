@@ -7,6 +7,7 @@ import { userRouter } from '@modules/users/routes/user.routes';
 import { orderRouter } from '@modules/orders/routes/order.routes';
 import { customerRouter } from '@modules/customers/infra/http/routes/customer.routes';
 import { meRouter } from '@modules/users/routes/me.routes';
+import { userEmailRouter } from '@modules/users/routes/user_email.routes';
 
 export const routes = Router();
 
@@ -18,6 +19,7 @@ routes.use('/profile', profileRouter);
 routes.use('/customers', customerRouter);
 routes.use('/orders', orderRouter);
 routes.use('/me', meRouter);
+routes.use('/user/email', userEmailRouter);
 
 routes.get('/', (req, res) => {
   return res.json({ message: 'Hello World!' });
