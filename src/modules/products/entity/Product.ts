@@ -18,6 +18,12 @@ export class Product {
   @Column('int')
   quantity: number;
 
+  @Column({ type: 'varchar', nullable: true })
+  image_url: string | null;
+
+  @Column()
+  description: string;
+
   @CreateDateColumn()
   created_at: Date;
 
