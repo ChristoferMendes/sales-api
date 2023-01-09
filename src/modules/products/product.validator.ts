@@ -16,6 +16,7 @@ export class ProductValidator {
         name: Joi.string().required(),
         price: Joi.number().precision(2).required(),
         quantity: Joi.number().required(),
+        description: Joi.string().required(),
       },
     });
   }
@@ -26,6 +27,7 @@ export class ProductValidator {
         name: Joi.string().required(),
         price: Joi.number().precision(2).required(),
         quantity: Joi.number().required(),
+        description: Joi.number().required(),
       },
       [Segments.PARAMS]: {
         uuid: Joi.string().uuid().required(),

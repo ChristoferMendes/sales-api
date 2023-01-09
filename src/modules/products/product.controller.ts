@@ -21,19 +21,20 @@ export class ProductsController {
   }
 
   async create(req: Request, res: Response) {
-    const { name, price, quantity } = req.body;
+    const { name, price, quantity, description } = req.body;
 
     const product = await productService.create({
       name,
       price,
       quantity,
+      description,
     });
 
     return res.status(created).json({ message: 'Product created', product });
   }
 
   async update(req: Request, res: Response) {
-    const { name, price, quantity } = req.body;
+    const { name, price, quantity, description } = req.body;
     const { uuid } = req.body;
 
     const product = await productService.update({
@@ -41,6 +42,7 @@ export class ProductsController {
       name,
       price,
       quantity,
+      description,
     });
 
     return res.status(ok).json({ message: 'Product updated', product });
@@ -52,5 +54,11 @@ export class ProductsController {
     const productDeleted = await productService.delete({ uuid });
 
     return res.status(ok).json({ message: 'Product deleted', productDeleted });
+  }
+
+  async imageUpdate(req: Request, res: Response) {
+    const product = await productService.imageUpdate({ uuid: req.params.uuid, file: req.file?.filename });
+
+    return res.status(ok).json(product);
   }
 }
