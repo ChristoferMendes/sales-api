@@ -7,6 +7,7 @@ import { IProductService } from '../domain/services/IProductService';
 import path from 'path';
 import fs from 'fs';
 import uploadConfig from '@config/upload';
+import { CategoryEnum } from '../entity/category.enum';
 
 interface IRequest {
   uuid: string;
@@ -14,6 +15,7 @@ interface IRequest {
   price: number;
   quantity: number;
   description: string;
+  category?: CategoryEnum;
 }
 
 const redisCache = new RedisCache();
@@ -25,17 +27,19 @@ export class ProductService implements IProductService {
     price,
     quantity,
     description,
+    category,
   }: {
     name: string;
     price: number;
     quantity: number;
     description: string;
+    category?: CategoryEnum;
   }) {
     const productExists = await ProductRepository.findByName(name);
 
     if (productExists) throw new AppError('There is already one product with this name', conflict);
 
-    const product = ProductRepository.create({ name, price, quantity, description });
+    const product = ProductRepository.create({ name, price, quantity, description, category });
 
     await redisCache.invalidate(this.cacheKey);
 
@@ -44,21 +48,22 @@ export class ProductService implements IProductService {
     return product;
   }
 
-  async update({ uuid, name, price, quantity, description }: IRequest) {
+  async update({ uuid, name, price, quantity, description, category }: IRequest) {
     const productExists = await ProductRepository.findByName(name);
 
     const product = await ProductRepository.findOneBy({ uuid });
 
     if (!product) throw new AppError('Product not found', notFound);
 
-    if (productExists && name != product?.name) {
+    if (productExists && name === product.name) {
       throw new AppError('There is already one product with this name', conflict);
     }
 
-    product.name = name;
-    product.price = price;
-    product.quantity = quantity;
-    product.description = description;
+    product.name = name ?? product.name;
+    product.price = price ?? product.price;
+    product.quantity = quantity ?? product.quantity;
+    product.description = description ?? product.description;
+    product.category = category ?? product.category;
 
     await redisCache.invalidate(this.cacheKey);
 

@@ -21,20 +21,21 @@ export class ProductsController {
   }
 
   async create(req: Request, res: Response) {
-    const { name, price, quantity, description } = req.body;
+    const { name, price, quantity, description, category } = req.body;
 
     const product = await productService.create({
       name,
       price,
       quantity,
       description,
+      category,
     });
 
     return res.status(created).json({ message: 'Product created', product });
   }
 
   async update(req: Request, res: Response) {
-    const { name, price, quantity, description } = req.body;
+    const { name, price, quantity, description, category } = req.body;
     const { uuid } = req.body;
 
     const product = await productService.update({
@@ -43,6 +44,7 @@ export class ProductsController {
       price,
       quantity,
       description,
+      category,
     });
 
     return res.status(ok).json({ message: 'Product updated', product });

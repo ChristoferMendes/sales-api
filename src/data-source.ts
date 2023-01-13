@@ -17,6 +17,8 @@ import { OrdersProducts } from '@modules/orders/entities/OrdersProducts';
 import { Customer } from '@modules/customers/infra/typeorm/entities/Customer';
 import { AddDescriptionAndImageUrlToProduct1673265440933 } from './migration/1673265440933-AddDescriptionAndImageUrlToProduct';
 import { AddNullToImageUrlColumnInProducts1673265895897 } from './migration/1673265895897-AddNullToImageUrlColumnInProducts';
+import { AddCategoryToProducts1673530044729 } from './migration/1673530044729-AddCategoryToProducts';
+import { ChangeProductsCategoryToEnum1673530967562 } from './migration/1673530967562-ChangeProductsCategoryToEnum';
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
@@ -40,6 +42,8 @@ export const AppDataSource = new DataSource({
     AddOrderUuidToOrdersProducts1669165208892,
     AddDescriptionAndImageUrlToProduct1673265440933,
     AddNullToImageUrlColumnInProducts1673265895897,
+    AddCategoryToProducts1673530044729,
+    ChangeProductsCategoryToEnum1673530967562,
   ],
   subscribers: [],
 });

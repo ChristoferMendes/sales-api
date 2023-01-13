@@ -1,5 +1,6 @@
 import { OrdersProducts } from '@modules/orders/entities/OrdersProducts';
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { CategoryEnum } from './category.enum';
 
 @Entity('products')
 export class Product {
@@ -17,6 +18,9 @@ export class Product {
 
   @Column('int')
   quantity: number;
+
+  @Column({ type: 'enum', nullable: true, enum: CategoryEnum })
+  category: CategoryEnum;
 
   @Column({ type: 'varchar', nullable: true })
   image_url: string | null;
